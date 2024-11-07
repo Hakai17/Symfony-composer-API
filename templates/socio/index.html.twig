@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Socio index{% endblock %}
+
+{% block body %}
+    <h1>Socio index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Cpf</th>
+                <th>Data_criacao</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for socio in socios %}
+            <tr>
+                <td>{{ socio.id }}</td>
+                <td>{{ socio.nome }}</td>
+                <td>{{ socio.cpf }}</td>
+                <td>{{ socio.dataCriacao ? socio.dataCriacao|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_socio_show', {'id': socio.id}) }}">show</a>
+                    <a href="{{ path('app_socio_edit', {'id': socio.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_socio_new') }}">Create new</a>
+{% endblock %}

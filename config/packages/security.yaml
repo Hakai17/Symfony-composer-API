@@ -1,0 +1,29 @@
+security:
+    password_hashers:
+        App\Entity\User: 'auto'
+
+    providers:
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        register_login:
+            pattern: ^/sso/(register|login)
+            security: false
+
+        main:
+            provider: app_user_provider
+            stateless: true
+            entry_point: jwt
+            jwt: ~
+
+    access_control:
+        # Permite acesso sem autenticação para registro e login
+        - { path: ^/sso/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/sso/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
